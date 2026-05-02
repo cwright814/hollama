@@ -61,6 +61,7 @@
 			class="
 		flex h-full w-[90vw] flex-shrink-0 flex-col bg-shade-1 lg:mr-4 lg:w-96 lg:rounded-xl lg:border
 	"
+			style={{ width: '20rem' }}
 			transition:slide={{ delay: 50, duration: 100, axis: 'x' }}
 			aria-label="Main navigation"
 			data-testid="sidebar"
