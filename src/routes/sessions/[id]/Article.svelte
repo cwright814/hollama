@@ -168,6 +168,7 @@
 		@apply md:mb-4 md:gap-y-4 md:p-4;
 		@apply lg:mb-6 lg:p-6;
 		@apply last:mb-0;
+		contain: layout;
 	}
 
 	.article--assistant {

@@ -347,5 +347,6 @@
 
 	.session__history {
 		@apply base-fieldset-container overflow-scrollbar flex-grow;
+		contain: layout paint;
 	}
 </style>
