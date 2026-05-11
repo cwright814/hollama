@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Brain, CircleStop, Image, LoaderCircle, UnfoldVertical } from 'lucide-svelte';
+	import { Brain, CircleStop, Image, UnfoldVertical } from 'lucide-svelte';
 	import MessageSquareText from 'lucide-svelte/icons/message-square-text';
 	import Settings_2 from 'lucide-svelte/icons/settings-2';
 	import Trash_2 from 'lucide-svelte/icons/trash-2';
@@ -425,7 +425,11 @@
 								<CircleStop class=" base-icon" />
 							</span>
 							<span class="prompt-editor__loading-icon">
-								<LoaderCircle class="prompt-editor__loading-icon base-icon animate-spin" />
+								<div class="prompt-editor__ellipsis">
+									<span class="dot dot--1">.</span>
+									<span class="dot dot--2">.</span>
+									<span class="dot dot--3">.</span>
+								</div>
 							</span>
 						</div>
 					</Button>
@@ -488,13 +492,73 @@
 		@apply flex h-full items-center gap-x-2;
 	}
 
-	.prompt-editor__stop-icon,
 	.prompt-editor__loading-icon {
 		@apply absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2;
+		contain: paint;
+		will-change: visibility;
+	}
+
+	.prompt-editor__ellipsis {
+		@apply flex items-center justify-center font-mono text-sm font-bold -translate-x-[1px];
+	}
+
+	.dot {
+		@apply w-[0.8ch] text-center;
+	}
+
+	.dot--1 {
+		animation: dot-1-loop 2s steps(1) infinite;
+	}
+	.dot--2 {
+		animation: dot-2-loop 2s steps(1) infinite;
+	}
+	.dot--3 {
+		animation: dot-3-loop 2s steps(1) infinite;
+	}
+
+	@keyframes dot-1-loop {
+		0%,
+		49.9% {
+			visibility: visible;
+		}
+		50%,
+		79.9% {
+			visibility: hidden;
+		}
+		80%,
+		100% {
+			visibility: visible;
+		}
+	}
+
+	@keyframes dot-2-loop {
+		0%,
+		59.9% {
+			visibility: visible;
+		}
+		60%,
+		89.9% {
+			visibility: hidden;
+		}
+		90%,
+		100% {
+			visibility: visible;
+		}
+	}
+
+	@keyframes dot-3-loop {
+		0%,
+		69.9% {
+			visibility: visible;
+		}
+		70%,
+		100% {
+			visibility: hidden;
+		}
 	}
 
 	.prompt-editor__stop-icon {
-		@apply opacity-0;
+		@apply absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 opacity-0;
 	}
 
 	.prompt-editor__loading-icon {
