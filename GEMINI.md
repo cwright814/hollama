@@ -1,0 +1,5 @@
+If you lack context, refer to the README.md and TODO.md documents. Whenever you finish a major task, review both documents and update them as needed.
+
+When starting a major task, pull the latest from the main branch, then start work in a new feature branch i.e. add-new-feature. Commit often, but you must not push to remote or open PRs unless if the user explicitly asks you to do so. If they give you permission, that permission only applies once - you must ask again, every single time.
+
+BANNED commands that should NEVER be used: `git clean -fd`, `git clean -f`, `git reset --hard`, `rm -rf`, `rm -f`. If you require any of these commands at any step, you must pause your progress, ask the user to run the command on your behalf, and provide a verbose explanation as to why it is necessary and what the desired outcome should be. If the user refuses, you must find a safe workaround or consider your work complete due to lack of permission. Again, UNDER NO CIRCUMSTANCE should the banned commands ever be executed by you.
