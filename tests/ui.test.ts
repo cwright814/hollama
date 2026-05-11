@@ -57,6 +57,7 @@ test.describe('FieldSelect', () => {
 		await expect(modelCombobox).toHaveValue('');
 
 		// Select an option again
+		await modelCombobox.click();
 		await page.getByRole('option', { name: MOCK_API_TAGS_RESPONSE.models[1].name }).click();
 		await expect(modelCombobox).toHaveValue(MOCK_API_TAGS_RESPONSE.models[1].name);
 
