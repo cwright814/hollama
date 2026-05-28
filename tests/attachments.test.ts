@@ -599,9 +599,11 @@ test.describe('Attachments', () => {
 
 			// Create and dispatch paste event
 			const pasteEvent = new ClipboardEvent('paste', {
-				clipboardData: clipboardData,
 				bubbles: true,
 				cancelable: true
+			});
+			Object.defineProperty(pasteEvent, 'clipboardData', {
+				value: clipboardData
 			});
 
 			textarea.dispatchEvent(pasteEvent);
@@ -645,9 +647,11 @@ test.describe('Attachments', () => {
 				clipboardData.items.add(file);
 
 				const pasteEvent = new ClipboardEvent('paste', {
-					clipboardData: clipboardData,
 					bubbles: true,
 					cancelable: true
+				});
+				Object.defineProperty(pasteEvent, 'clipboardData', {
+					value: clipboardData
 				});
 
 				textarea.dispatchEvent(pasteEvent);

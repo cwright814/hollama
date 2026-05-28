@@ -263,7 +263,11 @@
 	}
 
 	function handleError(error: Error) {
-		if (error.message === 'Failed to fetch') {
+		if (
+			error.message === 'Failed to fetch' ||
+			error.message === 'NetworkError when attempting to fetch resource.' ||
+			error.message === 'Load failed'
+		) {
 			toast.error($LL.genericError(), { description: $LL.cantConnectToOllamaServer() });
 		} else {
 			toast.error($LL.genericError(), { description: error.toString() });

@@ -295,8 +295,8 @@ test('imports session data from JSON file', async ({ page }, testInfo) => {
 	await expect(page.getByTestId('session-item')).toHaveCount(1);
 	// UI: Check session message is visible
 	await page.getByTestId('session-item').first().click();
-	await expect(page.getByText('Test message')).toBeVisible();
-	await expect(page.getByText('Test response')).toBeVisible();
+	await expect(page.locator('article').getByText('Test message')).toBeVisible();
+	await expect(page.locator('article').getByText('Test response')).toBeVisible();
 	const afterSessions = await page.evaluate(() => window.localStorage.getItem('hollama-sessions'));
 	expect(afterSessions).toContain('Test message');
 });

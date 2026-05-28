@@ -418,9 +418,7 @@ test.describe('Session interaction', () => {
 		});
 		await page.locator('button', { hasText: 'Run' }).click();
 		await expect(
-			page.getByText(
-				"SyntaxError: Expected property name or '}' in JSON at position 2 (line 1 column 3)"
-			)
+			page.getByText(/SyntaxError:.*expected property name or '}'/i)
 		).toBeVisible();
 		await expect(promptTextarea).toHaveValue(
 			'Who would win in a fight between Emma Watson and Jessica Alba?'

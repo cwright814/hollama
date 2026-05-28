@@ -59,12 +59,14 @@
 		} catch (error) {
 			const typedError = error instanceof Error ? error : new Error(String(error));
 
+			const isNetworkError =
+				typedError.message === 'Failed to fetch' ||
+				typedError.message === 'NetworkError when attempting to fetch resource.' ||
+				typedError.message === 'Load failed';
+
 			toast.error($LL.genericError(), {
 				id: toastId,
-				description:
-					typedError.message === 'Failed to fetch'
-						? $LL.couldntConnectToOllamaServer()
-						: typedError.message
+				description: isNetworkError ? $LL.couldntConnectToOllamaServer() : typedError.message
 			});
 		}
 		isPullInProgress = false;
