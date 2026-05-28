@@ -23,7 +23,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 22
+          node-version: 26
       - run: npm ci
       - run: npm run build
 
@@ -50,7 +50,7 @@ jobs:
           ref: main # Ensure we checkout the commit made by semantic-release
       - uses: actions/setup-node@v4
         with:
-          node-version: 22
+          node-version: 26
 
       # The update-package-json.cjs script is removed, semantic-release handles this.
 
@@ -80,7 +80,7 @@ jobs:
       - name: Set up Node.js # Added for reading package.json version
         uses: actions/setup-node@v4
         with:
-          node-version: 22
+          node-version: 26
 
       - name: Extract version from package.json
         id: package_version
