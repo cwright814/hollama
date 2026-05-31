@@ -6,7 +6,7 @@
 - [x] Upgrade packages to or near the latest, especially playwright and svelte deps
 - [x] Consider upgrading to the latest Node LTS if compatible with the upgraded packages (if it works, update .nvmrc and .node-version)
 - [x] Update this files with a few tasks from the top of README.md
-- [ ] Install and support pnpm as the project's package manager
+- [x] Install and support pnpm as the project's package manager
 - [ ] Make local llama.cpp a first-class citizen
 - [ ] Streamline support for llama-swap - seamless multi-model via a single llama-server instance
 - [ ] Add some nice-to-haves (in-line thinking toggle, AI-generated chat titles, etc)

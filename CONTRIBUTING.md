@@ -19,16 +19,16 @@ Hollama is a static site built with:
 - Playwright
 - Electron
 
-Install dependencies with `npm install`, start a development server:
+Install dependencies with `pnpm install`, start a development server:
 
 ```bash
-npm run dev
+pnpm dev
 
 # or start the server and open the app in a new browser tab
-npm run dev -- --open
+pnpm dev --open
 
 # run the app with Electron
-npm run electron
+pnpm electron
 ```
 
 ## Building
@@ -36,10 +36,10 @@ npm run electron
 To create a production version of Hollama:
 
 ```bash
-npm run build
+pnpm build
 
 # or package with Electron
-npm run electron:build
+pnpm electron:build
 ```
 
-You can preview the production build with `npm run preview`.
+You can preview the production build with `pnpm preview`.

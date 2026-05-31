@@ -18,8 +18,8 @@
 			"type": "node",
 			"request": "launch",
 			"name": "Start vite",
-			"runtimeExecutable": "npm",
-			"runtimeArgs": ["run", "dev", "--", "--port", "4000"],
+			"runtimeExecutable": "pnpm",
+			"runtimeArgs": ["run", "dev", "--port", "4000"],
 			"skipFiles": ["<node_internals>/**"],
 			"console": "integratedTerminal"
 		},

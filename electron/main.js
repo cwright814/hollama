@@ -62,7 +62,7 @@ app
 			});
 		} else {
 			console.warn('##### Running Electron in development mode');
-			console.log('##### Run `npm run dev` to start the Hollama server separately');
+			console.log('##### Run `pnpm dev` to start the Hollama server separately');
 		}
 
 		await checkServerAvailability(parseInt(hollamaPort));
