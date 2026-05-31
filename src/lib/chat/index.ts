@@ -5,6 +5,7 @@ import { sessionsStore, settingsStore } from '$lib/localStorage';
 import type { Model } from '$lib/settings';
 
 import { type OllamaOptions } from './ollama';
+import { type LlamaCppOptions } from './llamacpp';
 
 export interface Message {
 	role: 'user' | 'assistant' | 'system';
@@ -16,7 +17,7 @@ export interface ChatRequest {
 	model: string;
 	messages: Message[];
 	stream?: boolean;
-	options?: Partial<OllamaOptions>;
+	options?: Partial<OllamaOptions> & Partial<LlamaCppOptions>;
 }
 
 export interface ChatStrategy {

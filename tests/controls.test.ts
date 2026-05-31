@@ -22,7 +22,7 @@ test('can navigate between session messages and controls', async ({ page }) => {
 	const MOCK_SESSION = [
 		{
 			id: '16pk4l',
-			model: 'gemma2:27b',
+			model: 'gemma-4:e4b',
 			updatedAt: '2024-09-24T14:24:30.725Z',
 			messages: [
 				{ role: 'user', content: "What's the NATO phonetic alphabet?" },
@@ -90,7 +90,7 @@ test('can set ollama model and runtime options', async ({ page }) => {
 	await promptTextarea.fill('Who would win in a fight between Emma Watson and Jessica Alba?');
 	await page.getByText('Run').click();
 	expect(requestPayload).toEqual({
-		model: 'gemma:7b',
+		model: 'gemma-4:e4b',
 		options: {},
 		messages: [
 			{
@@ -200,7 +200,7 @@ test('can set ollama model and runtime options', async ({ page }) => {
 	};
 
 	expect(requestPayload).toEqual({
-		model: 'gemma:7b',
+		model: 'gemma-4:e4b',
 		options: customizedOptions,
 		messages: [
 			{
@@ -290,7 +290,7 @@ test('can set ollama model and runtime options', async ({ page }) => {
 	await page.getByRole('button', { name: 'Run' }).click();
 	// Model is retained from last session
 	expect(requestPayload).toEqual({
-		model: 'gemma:7b',
+		model: 'gemma-4:e4b',
 		options: customizedOptions,
 		messages: [
 			{

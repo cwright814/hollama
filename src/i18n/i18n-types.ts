@@ -151,7 +151,7 @@ type RootTranslation = {
 	 */
 	controls: string
 	/**
-	 * A​d​v​a​n​c​e​d​ ​c​o​n​t​r​o​l​s​ ​a​r​e​ ​c​u​r​r​e​n​t​l​y​ ​o​n​l​y​ ​a​v​a​i​l​a​b​l​e​ ​f​o​r​ ​O​l​l​a​m​a​ ​m​o​d​e​l​s
+	 * A​d​v​a​n​c​e​d​ ​c​o​n​t​r​o​l​s​ ​a​r​e​ ​c​u​r​r​e​n​t​l​y​ ​o​n​l​y​ ​a​v​a​i​l​a​b​l​e​ ​f​o​r​ ​O​l​l​a​m​a​ ​a​n​d​ ​l​l​a​m​a​.​c​p​p​ ​m​o​d​e​l​s
 	 */
 	controlsOnlyAvailableForOllama: string
 	/**
@@ -440,11 +440,59 @@ type RootTranslation = {
 	 */
 	ollamaLibrary: string
 	/**
+	 * l​l​a​m​a​.​c​p​p
+	 */
+	llamaCpp: string
+	/**
+	 * X​T​C​ ​P​r​o​b​a​b​i​l​i​t​y
+	 */
+	xtcProbability: string
+	/**
+	 * X​T​C​ ​T​h​r​e​s​h​o​l​d
+	 */
+	xtcThreshold: string
+	/**
+	 * D​y​n​a​t​e​m​p​ ​r​a​n​g​e
+	 */
+	dynatempRange: string
+	/**
+	 * D​y​n​a​t​e​m​p​ ​e​x​p​o​n​e​n​t
+	 */
+	dynatempExponent: string
+	/**
+	 * D​R​Y​ ​m​u​l​t​i​p​l​i​e​r
+	 */
+	dryMultiplier: string
+	/**
+	 * D​R​Y​ ​b​a​s​e
+	 */
+	dryBase: string
+	/**
+	 * D​R​Y​ ​a​l​l​o​w​e​d​ ​l​e​n​g​t​h
+	 */
+	dryAllowedLength: string
+	/**
+	 * D​R​Y​ ​p​e​n​a​l​t​y​ ​l​a​s​t​ ​N
+	 */
+	dryPenaltyLastN: string
+	/**
+	 * A​d​a​p​t​i​v​e​ ​t​a​r​g​e​t
+	 */
+	adaptiveTarget: string
+	/**
+	 * A​d​a​p​t​i​v​e​ ​d​e​c​a​y
+	 */
+	adaptiveDecay: string
+	/**
+	 * M​a​x​ ​t​o​k​e​n​s
+	 */
+	maxTokens: string
+	/**
 	 * O​p​e​n​A​I​:​ ​O​f​f​i​c​i​a​l​ ​A​P​I
 	 */
 	openAIOfficialAPI: string
 	/**
-	 * O​p​e​n​A​I​:​ ​C​o​m​p​a​t​i​b​l​e​ ​s​e​r​v​e​r​s​ ​(​i​.​e​.​ ​l​l​a​m​a​.​c​p​p​)
+	 * O​p​e​n​A​I​:​ ​C​o​m​p​a​t​i​b​l​e​ ​s​e​r​v​e​r​s​ ​(​e​v​e​r​y​t​h​i​n​g​ ​e​l​s​e​)
 	 */
 	openAICompatible: string
 	/**
@@ -830,7 +878,7 @@ The completion in progress will stop
 	 */
 	controls: () => LocalizedString
 	/**
-	 * Advanced controls are currently only available for Ollama models
+	 * Advanced controls are currently only available for Ollama and llama.cpp models
 	 */
 	controlsOnlyAvailableForOllama: () => LocalizedString
 	/**
@@ -1118,11 +1166,59 @@ The completion in progress will stop
 	 */
 	ollamaLibrary: () => LocalizedString
 	/**
+	 * llama.cpp
+	 */
+	llamaCpp: () => LocalizedString
+	/**
+	 * XTC Probability
+	 */
+	xtcProbability: () => LocalizedString
+	/**
+	 * XTC Threshold
+	 */
+	xtcThreshold: () => LocalizedString
+	/**
+	 * Dynatemp range
+	 */
+	dynatempRange: () => LocalizedString
+	/**
+	 * Dynatemp exponent
+	 */
+	dynatempExponent: () => LocalizedString
+	/**
+	 * DRY multiplier
+	 */
+	dryMultiplier: () => LocalizedString
+	/**
+	 * DRY base
+	 */
+	dryBase: () => LocalizedString
+	/**
+	 * DRY allowed length
+	 */
+	dryAllowedLength: () => LocalizedString
+	/**
+	 * DRY penalty last N
+	 */
+	dryPenaltyLastN: () => LocalizedString
+	/**
+	 * Adaptive target
+	 */
+	adaptiveTarget: () => LocalizedString
+	/**
+	 * Adaptive decay
+	 */
+	adaptiveDecay: () => LocalizedString
+	/**
+	 * Max tokens
+	 */
+	maxTokens: () => LocalizedString
+	/**
 	 * OpenAI: Official API
 	 */
 	openAIOfficialAPI: () => LocalizedString
 	/**
-	 * OpenAI: Compatible servers (i.e. llama.cpp)
+	 * OpenAI: Compatible servers (everything else)
 	 */
 	openAICompatible: () => LocalizedString
 	/**

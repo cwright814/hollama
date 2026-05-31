@@ -167,7 +167,7 @@ test.describe('Sidebar on desktop', () => {
 		// Test GitHub link (should open in new tab)
 		const githubLink = page.getByRole('link', { name: 'GitHub' });
 		await expect(githubLink).toHaveAttribute('target', '_blank');
-		await expect(githubLink).toHaveAttribute('href', 'https://github.com/fmaclen/hollama');
+		await expect(githubLink).toHaveAttribute('href', 'https://github.com/cwright814/hollama-spark');
 	});
 
 	test('theme toggle button works correctly', async ({ page }) => {

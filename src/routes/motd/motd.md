@@ -27,7 +27,7 @@
 #### Contributions
 
 We welcome contributions from people familiar with **Svelte**, **TypeScript** and **TailwindCSS**.
-If that sparks your interest, read this next: [`CONTRIBUTING.md`](https://github.com/fmaclen/hollama/blob/main/CONTRIBUTING.md)
+If that sparks your interest, read this next: [`CONTRIBUTING.md`](https://github.com/cwright814/hollama-spark/blob/main/CONTRIBUTING.md)
 
 #### About
 

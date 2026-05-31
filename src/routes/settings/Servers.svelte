@@ -34,6 +34,7 @@
 					label={$LL.connectionType()}
 					placeholder={$LL.connectionType()}
 					options={[
+						{ value: ConnectionType.LlamaCpp, label: $LL.llamaCpp() },
 						{ value: ConnectionType.Ollama, label: $LL.ollama() },
 						{ value: ConnectionType.OpenAI, label: $LL.openAIOfficialAPI() },
 						{ value: ConnectionType.OpenAICompatible, label: $LL.openAICompatible() }

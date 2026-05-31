@@ -25,8 +25,8 @@ export const MOCK_API_TAGS_RESPONSE: ListResponse = {
 			size_vram: 4108928240
 		},
 		{
-			model: 'gemma:7b',
-			name: 'gemma:7b',
+			model: 'gemma-4:e4b',
+			name: 'gemma-4:e4b',
 			modified_at: new Date('2024-04-08T21:41:35.217983842-04:00'),
 			size: 5011853225,
 			digest: 'a72c7f4d0a15522df81486d13ce432c79e191bda2558d024fbad4362c4f7cbf8',
@@ -35,7 +35,7 @@ export const MOCK_API_TAGS_RESPONSE: ListResponse = {
 				format: 'gguf',
 				family: 'gemma',
 				families: ['gemma'],
-				parameter_size: '9B',
+				parameter_size: 'e4b',
 				quantization_level: 'Q4_0'
 			},
 			expires_at: new Date(),
@@ -62,7 +62,7 @@ export const MOCK_API_TAGS_RESPONSE: ListResponse = {
 };
 
 export const MOCK_SESSION_1_RESPONSE_1: ChatResponse = {
-	model: 'gemma:7b',
+	model: 'gemma-4:e4b',
 	created_at: new Date('2024-04-10T22:54:40.310905Z'),
 	message: {
 		role: 'assistant',
@@ -80,7 +80,7 @@ export const MOCK_SESSION_1_RESPONSE_1: ChatResponse = {
 };
 
 export const MOCK_SESSION_1_RESPONSE_2: ChatResponse = {
-	model: 'gemma:7b',
+	model: 'gemma-4:e4b',
 	created_at: new Date('2024-04-10T23:08:33.419483Z'),
 	message: {
 		role: 'assistant',
@@ -98,7 +98,7 @@ export const MOCK_SESSION_1_RESPONSE_2: ChatResponse = {
 };
 
 export const MOCK_SESSION_1_RESPONSE_3: ChatResponse = {
-	model: 'gemma:7b',
+	model: 'gemma-4:e4b',
 	created_at: new Date('2024-04-10T23:08:33.419483Z'),
 	message: {
 		role: 'assistant',
@@ -205,6 +205,11 @@ export const MOCK_OPENAI_MODELS: OpenAI.Models.Model[] = [
 	{ id: 'gpt-3.5-turbo', object: 'model', created: 1677610602, owned_by: 'openai' },
 	{ id: 'gpt-4', object: 'model', created: 1687882411, owned_by: 'openai' },
 	{ id: 'text-davinci-003', object: 'model', created: 1669599635, owned_by: 'openai-internal' }
+];
+
+export const MOCK_LLAMA_CPP_MODELS: OpenAI.Models.Model[] = [
+	{ id: 'google_gemma-4-E4B-it-IQ4_NL.gguf', object: 'model', created: 1732284764, owned_by: 'llamacpp' },
+	{ id: 'Nemotron-3-Nano-4B-Instruct-Q4_K_M.gguf', object: 'model', created: 1732284765, owned_by: 'llamacpp' }
 ];
 
 export async function chooseFromCombobox(
@@ -435,10 +440,21 @@ export async function mockOpenAICompletionResponse(
 	});
 }
 
+export async function mockLlamaCppModelsResponse(page: Page, models: OpenAI.Models.Model[]) {
+	await page.goto('/settings');
+	await chooseFromCombobox(page, 'Connection type', 'llama.cpp');
+	await page.getByText('Add connection').click();
+	await page.route('http://localhost:8080/v1/models', async (route: Route) => {
+		await route.fulfill({ json: { data: models } });
+	});
+	await page.getByRole('button', { name: 'Verify', exact: true }).click();
+	await expect(page.getByText('Connection has been verified and is ready to use')).toBeVisible();
+}
+
 // Knowledge mock functions
 
 export const MOCK_SESSION_WITH_KNOWLEDGE_RESPONSE_1: ChatResponse = {
-	model: 'gemma:7b',
+	model: 'gemma-4:e4b',
 	created_at: new Date('2024-04-11T12:50:18.826017Z'),
 	message: {
 		role: 'assistant',

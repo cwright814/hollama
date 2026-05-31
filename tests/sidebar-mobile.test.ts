@@ -93,7 +93,7 @@ test.describe('Sidebar on mobile', () => {
 		const MOCK_SESSION = [
 			{
 				id: '16pk4l',
-				model: 'gemma2:27b',
+				model: 'gemma-4:e4b',
 				updatedAt: '2024-09-24T14:24:30.725Z',
 				messages: [
 					{ role: 'user', content: "What's the NATO phonetic alphabet?" },

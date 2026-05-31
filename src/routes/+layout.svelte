@@ -55,6 +55,28 @@
 		loadLocale($settingsStore.userLanguage);
 		setLocale($settingsStore.userLanguage);
 
+		// Migrate openai-compatible server to llama-cpp if baseUrl contains localhost:8080
+		serversStore.update((servers) => {
+			let updated = false;
+			const newServers = servers.map((server) => {
+				if (
+					server.connectionType === ConnectionType.OpenAICompatible &&
+					server.baseUrl.includes('localhost:8080')
+				) {
+					updated = true;
+					return {
+						...server,
+						connectionType: ConnectionType.LlamaCpp
+					};
+				}
+				return server;
+			});
+			if (updated) {
+				console.warn('Migrated OpenAI Compatible server to Llama.cpp');
+			}
+			return newServers;
+		});
+
 		// Migrate old server settings to new format
 		const settingsLocalStorage = localStorage.getItem(StorageKey.HollamaPreferences);
 		if (settingsLocalStorage) {

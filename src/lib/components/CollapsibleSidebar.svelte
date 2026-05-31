@@ -188,7 +188,7 @@
 				</a>
 
 				<a
-					href="https://github.com/fmaclen/hollama"
+					href="https://github.com/cwright814/hollama-spark"
 					target="_blank"
 					rel="noopener noreferrer"
 					class="duration-25 flex items-center gap-3 px-4 py-3 text-sm font-medium text-muted transition-colors hover:text-active"

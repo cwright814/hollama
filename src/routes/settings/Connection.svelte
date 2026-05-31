@@ -6,6 +6,7 @@
 	import LL from '$i18n/i18n-svelte';
 	import { OllamaStrategy } from '$lib/chat/ollama';
 	import { OpenAIStrategy } from '$lib/chat/openai';
+	import { LlamaCppStrategy } from '$lib/chat/llamacpp';
 	import Badge from '$lib/components/Badge.svelte';
 	import Button from '$lib/components/Button.svelte';
 	import FieldCheckbox from '$lib/components/FieldCheckbox.svelte';
@@ -18,6 +19,7 @@
 
 	import OllamaBaseURLHelp from './ollama/BaseURLHelp.svelte';
 	import PullModel from './ollama/PullModel.svelte';
+	import PullModelLlamaCpp from './llamacpp/PullModelLlamaCpp.svelte';
 
 	interface Props {
 		index: number;
@@ -25,13 +27,14 @@
 
 	let { index }: Props = $props();
 	let server: Server = $state($serversStore[index]);
-	let strategy: OllamaStrategy | OpenAIStrategy;
+	let strategy: OllamaStrategy | OpenAIStrategy | LlamaCppStrategy;
 	let isLoading = $state(false);
 
 	const isOpenAiFamily = $derived(
 		[ConnectionType.OpenAI, ConnectionType.OpenAICompatible].includes(server.connectionType)
 	);
 	const isOllamaFamily = $derived([ConnectionType.Ollama].includes(server.connectionType));
+	const isLlamaCppFamily = $derived([ConnectionType.LlamaCpp].includes(server.connectionType));
 
 	$effect(() => {
 		serversStore.update((servers) => {
@@ -44,7 +47,13 @@
 		isLoading = true;
 		const toastId = toast.loading($LL.connecting());
 
-		strategy = isOpenAiFamily ? new OpenAIStrategy(server) : new OllamaStrategy(server);
+		if (isLlamaCppFamily) {
+			strategy = new LlamaCppStrategy(server);
+		} else if (isOpenAiFamily) {
+			strategy = new OpenAIStrategy(server);
+		} else {
+			strategy = new OllamaStrategy(server);
+		}
 		server.isVerified = (await strategy.verifyServer()) ? new Date() : null;
 
 		if (server.isVerified) {
@@ -64,14 +73,16 @@
 <div data-testid="server">
 	<Fieldset>
 		{#snippet legend()}
-			{#if [ConnectionType.OpenAI, ConnectionType.Ollama].includes(server.connectionType)}
+			{#if [ConnectionType.OpenAI, ConnectionType.Ollama, ConnectionType.LlamaCpp].includes(server.connectionType)}
 				<Badge
 					variant={server.connectionType === ConnectionType.OpenAI
 						? ConnectionType.OpenAI
-						: ConnectionType.Ollama}
+						: server.connectionType === ConnectionType.Ollama
+							? ConnectionType.Ollama
+							: 'llama-cpp'}
 				/>
 			{/if}
-			<Badge>{server.label ? server.label : server.connectionType?.toUpperCase()}</Badge>
+			<Badge>{server.label ? server.label : server.connectionType === ConnectionType.LlamaCpp ? 'llama.cpp' : server.connectionType?.toUpperCase()}</Badge>
 		{/snippet}
 
 		<Fieldset>
@@ -171,6 +182,10 @@
 
 			{#if isOllamaFamily}
 				<PullModel {server} />
+			{/if}
+
+			{#if isLlamaCppFamily}
+				<PullModelLlamaCpp {server} />
 			{/if}
 		</Fieldset>
 	</Fieldset>

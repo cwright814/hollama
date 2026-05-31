@@ -7,6 +7,7 @@
 	import { type ChatRequest, type ChatStrategy } from '$lib/chat';
 	import { OllamaStrategy } from '$lib/chat/ollama';
 	import { OpenAIStrategy } from '$lib/chat/openai';
+	import { LlamaCppStrategy } from '$lib/chat/llamacpp';
 	import Button from '$lib/components/Button.svelte';
 	import ButtonCopy from '$lib/components/ButtonCopy.svelte';
 	import ButtonDelete from '$lib/components/ButtonDelete.svelte';
@@ -27,6 +28,7 @@
 
 	import type { PageData } from './$types';
 	import Controls from './Controls.svelte';
+	import ControlsLlamaCpp from './ControlsLlamaCpp.svelte';
 	import Messages from './Messages.svelte';
 	import Prompt from './Prompt.svelte';
 	import { createReasoningProcessor } from './reasoningProcessor';
@@ -188,6 +190,9 @@
 		try {
 			let strategy: ChatStrategy | undefined = undefined;
 			switch (server.connectionType) {
+				case ConnectionType.LlamaCpp:
+					strategy = new LlamaCppStrategy(server);
+					break;
 				case ConnectionType.Ollama:
 					strategy = new OllamaStrategy(server);
 					break;
@@ -327,7 +332,11 @@
 	</Header>
 
 	{#if editor.view === 'controls'}
-		<Controls bind:session />
+		{#if $serversStore.find((s) => s.id === session.model?.serverId)?.connectionType === ConnectionType.LlamaCpp}
+			<ControlsLlamaCpp bind:session />
+		{:else}
+			<Controls bind:session />
+		{/if}
 	{:else}
 		<div class="session__history" bind:this={messagesWindow}>
 			<Messages bind:session bind:editor {handleRetry} />

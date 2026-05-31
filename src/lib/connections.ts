@@ -1,6 +1,7 @@
 import { generateRandomId } from './utils';
 
 export enum ConnectionType {
+	LlamaCpp = 'llama-cpp',
 	Ollama = 'ollama',
 	OpenAI = 'openai',
 	OpenAICompatible = 'openai-compatible'
@@ -22,6 +23,9 @@ export function getDefaultServer(connectionType: ConnectionType): Server {
 	let modelFilter: string | undefined = undefined;
 
 	switch (connectionType) {
+		case ConnectionType.LlamaCpp:
+			baseUrl = 'http://localhost:8080/v1';
+			break;
 		case ConnectionType.Ollama:
 			baseUrl = 'http://localhost:11434';
 			break;

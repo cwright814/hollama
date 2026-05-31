@@ -6,8 +6,10 @@ import {
 	chooseFromCombobox,
 	MOCK_API_TAGS_RESPONSE,
 	MOCK_OPENAI_MODELS,
+	MOCK_LLAMA_CPP_MODELS,
 	mockOllamaModelsResponse,
-	mockOpenAIModelsResponse
+	mockOpenAIModelsResponse,
+	mockLlamaCppModelsResponse
 } from './utils';
 
 test.describe('Servers', () => {
@@ -22,14 +24,23 @@ test.describe('Servers', () => {
 		await expect(connections).toHaveCount(0);
 		await expect(page.getByLabel('Connection type')).toHaveValue('');
 
+		// Add a llama.cpp server
+		await chooseFromCombobox(page, 'Connection type', 'llama.cpp');
+		const connectionType = page.getByLabel('Connection type');
+		await expect(connectionType).toHaveValue('llama.cpp');
+		await page.getByText('Add connection').click();
+		await expect(connections.locator('.badge', { hasText: 'llama.cpp' })).toBeVisible();
+		await expect(connections).toHaveCount(1);
+		await expect(emptyMessage).not.toBeVisible();
+		await expect(connectionType).toHaveValue('');
+
 		// Add an Ollama server
 		await chooseFromCombobox(page, 'Connection type', 'Ollama');
-		const connectionType = page.getByLabel('Connection type');
 		await expect(connectionType).toHaveValue('Ollama');
 
 		await page.getByText('Add connection').click();
 		await expect(connections.locator('.badge', { hasText: 'Ollama' })).toBeVisible();
-		await expect(connections).toHaveCount(1);
+		await expect(connections).toHaveCount(2);
 		await expect(emptyMessage).not.toBeVisible();
 		await expect(connectionType).toHaveValue('');
 
@@ -37,7 +48,7 @@ test.describe('Servers', () => {
 		await chooseFromCombobox(page, 'Connection type', 'OpenAI: Official API');
 		await expect(connectionType).toHaveValue('OpenAI: Official API');
 		await page.getByText('Add connection').click();
-		await expect(connections).toHaveCount(2);
+		await expect(connections).toHaveCount(3);
 		await expect(connections.locator('.badge', { hasText: 'OpenAI' })).toBeVisible();
 		await expect(connectionType).toHaveValue('');
 
@@ -45,15 +56,19 @@ test.describe('Servers', () => {
 		await chooseFromCombobox(
 			page,
 			'Connection type',
-			'OpenAI: Compatible servers (i.e. llama.cpp)'
+			'OpenAI: Compatible servers (everything else)'
 		);
-		await expect(connectionType).toHaveValue('OpenAI: Compatible servers (i.e. llama.cpp)');
+		await expect(connectionType).toHaveValue('OpenAI: Compatible servers (everything else)');
 		await page.getByText('Add connection').click();
-		await expect(connections).toHaveCount(3);
+		await expect(connections).toHaveCount(4);
 		await expect(connections.locator('.badge', { hasText: 'OpenAI-Compatible' })).toBeVisible();
 		await expect(connectionType).toHaveValue('');
 
 		// Delete the servers
+		await connections.first().getByLabel('Delete server').click();
+		await expect(connections).toHaveCount(3);
+		await expect(emptyMessage).not.toBeVisible();
+
 		await connections.first().getByLabel('Delete server').click();
 		await expect(connections).toHaveCount(2);
 		await expect(emptyMessage).not.toBeVisible();
@@ -238,30 +253,22 @@ test.describe('Servers', () => {
 		);
 		await expect(connectionVerifiedMessage).toHaveCount(1);
 
-		// Add a `llama.cpp` (OpenAI compatible) server
+		// Add a `llama.cpp` server
 		await chooseFromCombobox(
 			page,
 			'Connection type',
-			'OpenAI: Compatible servers (i.e. llama.cpp)'
+			'llama.cpp'
 		);
 		await page.getByText('Add connection').click();
-		await expect(page.locator('.badge', { hasText: 'OpenAI-Compatible' })).toBeVisible();
+		await expect(page.locator('.badge', { hasText: 'llama.cpp' }).last()).toBeVisible();
 		await expect(connections.last().getByLabel('Label')).toHaveValue('');
 		await expect(connections.last().getByLabel('Base URL')).toHaveValue('http://localhost:8080/v1');
 
-		await connections.last().getByLabel('Label').fill('llama.cpp');
-		await expect(connections.last().locator('.badge', { hasText: 'llama.cpp' })).toBeVisible();
-		await expect(page.locator('.badge', { hasText: 'OpenAI-Compatible' })).not.toBeVisible();
+		await connections.last().getByLabel('Label').fill('my-llama');
+		await expect(connections.last().locator('.badge', { hasText: 'my-llama' })).toBeVisible();
+		await expect(page.locator('.badge', { hasText: 'llama.cpp', exact: true })).not.toBeVisible();
 
 		// Mock a model list for the `llama.cpp` server
-		const MOCK_LLAMA_CPP_MODELS: OpenAI.Models.Model[] = [
-			{
-				id: 'Qwen2.5-32B-Instruct-Q4_K_S.gguf',
-				object: 'model',
-				created: 1732284764,
-				owned_by: 'llamacpp'
-			}
-		];
 		await page.route('http://localhost:8080/v1/models', async (route: Route) => {
 			await route.fulfill({ json: { data: MOCK_LLAMA_CPP_MODELS } });
 		});
@@ -276,9 +283,9 @@ test.describe('Servers', () => {
 
 		await modelCombobox.click();
 		const modelOption = page.locator('.field-combobox-item-label');
-		await expect(modelOption).toHaveCount(3);
-		await expect(modelOption.last()).toContainText(MOCK_LLAMA_CPP_MODELS[0].id);
-		await expect(modelOption.last()).toContainText('llama.cpp');
+		await expect(modelOption).toHaveCount(4); // 2 openai + 2 llama.cpp
+		await expect(modelOption.last()).toContainText(MOCK_LLAMA_CPP_MODELS[1].id);
+		await expect(modelOption.last()).toContainText('my-llama');
 		await expect(modelOption.last()).not.toContainText('openai-compatible');
 	});
 
@@ -306,5 +313,51 @@ test.describe('Servers', () => {
 		expect(settings.models).toBeDefined();
 		expect(settings.models.length).toBeGreaterThan(0);
 		expect(settings.models[0].serverId).toBe(servers[0].id);
+	});
+
+	test('llama.cpp appears first in the connection type dropdown', async ({ page }) => {
+		await page.goto('/settings');
+		await page.getByLabel('Connection type').click();
+		const options = page.locator('[role="option"]');
+		await expect(options).toHaveCount(4);
+		await expect(options.nth(0)).toHaveText('llama.cpp');
+		await expect(options.nth(1)).toHaveText('Ollama');
+		await expect(options.nth(2)).toHaveText('OpenAI: Official API');
+		await expect(options.nth(3)).toHaveText('OpenAI: Compatible servers (everything else)');
+	});
+
+	test('llama.cpp server has correct default URL and does not show pull model UI', async ({ page }) => {
+		await page.goto('/settings');
+		await chooseFromCombobox(page, 'Connection type', 'llama.cpp');
+		await page.getByText('Add connection').click();
+		const connection = page.getByTestId('server').first();
+		await expect(connection.getByLabel('Base URL')).toHaveValue('http://localhost:8080/v1');
+		
+		// The pull model UI should not be visible for llama.cpp
+		await expect(connection.getByLabel('Pull model')).not.toBeVisible();
+		await expect(connection.getByText('Models must be downloaded manually')).toBeVisible();
+	});
+
+	test('advanced controls are available for llama.cpp models', async ({ page }) => {
+		await mockLlamaCppModelsResponse(page, MOCK_LLAMA_CPP_MODELS);
+		await page.getByRole('tab', { name: 'Sessions' }).click();
+		await page.getByTestId('new-session').click();
+		
+		await chooseFromCombobox(page, 'Available models', MOCK_LLAMA_CPP_MODELS[0].id);
+		
+		// Wait for model to load
+		await expect(page.getByLabel('Available models')).toHaveValue(MOCK_LLAMA_CPP_MODELS[0].id);
+		
+		// Open controls
+		await page.getByLabel('Controls').click();
+		
+		// No warning toast should appear
+		await expect(page.getByText('Advanced controls are currently only available')).not.toBeVisible();
+		
+		// Verify some specific llama.cpp controls exist
+		await expect(page.getByLabel('XTC Probability')).toBeVisible();
+		await expect(page.getByLabel('XTC Threshold')).toBeVisible();
+		await expect(page.getByLabel('Min P')).toBeVisible();
+		await expect(page.getByLabel('Typical P')).toBeVisible();
 	});
 });

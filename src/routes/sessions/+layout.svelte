@@ -5,6 +5,7 @@
 	import { getLastUsedModels } from '$lib/chat';
 	import { OllamaStrategy } from '$lib/chat/ollama';
 	import { OpenAIStrategy } from '$lib/chat/openai';
+	import { LlamaCppStrategy } from '$lib/chat/llamacpp';
 	import RobotsNoIndex from '$lib/components/RobotsNoIndex.svelte';
 	import { ConnectionType } from '$lib/connections';
 	import { serversStore, settingsStore } from '$lib/localStorage';
@@ -19,6 +20,9 @@
 			if (!server.isEnabled) continue;
 
 			switch (server.connectionType) {
+				case ConnectionType.LlamaCpp:
+					models.push(...(await new LlamaCppStrategy(server).getModels().catch(() => [])));
+					break;
 				case ConnectionType.Ollama:
 					models.push(...(await new OllamaStrategy(server).getModels().catch(() => [])));
 					break;

@@ -1,7 +1,7 @@
 <script lang="ts">
 	let className: string | undefined | null = '';
 	export let href: string | undefined = undefined;
-	export let variant: 'positive' | 'warning' | 'openai' | 'ollama' | undefined = undefined;
+	export let variant: 'positive' | 'warning' | 'openai' | 'ollama' | 'llama-cpp' | undefined = undefined;
 	export { className as class };
 </script>
 
@@ -55,6 +55,10 @@
 				/>
 			</svg>
 		</span>
+	{:else if variant === 'llama-cpp'}
+		<span class="badge--llama-cpp">
+			<img src="/llamacpp-badge.png" alt="llama.cpp" width="12" height="12" class="h-3 w-3 object-contain" />
+		</span>
 	{:else}
 		<slot />
 	{/if}
@@ -75,7 +79,8 @@
 		}
 
 		&--openai,
-		&--ollama {
+		&--ollama,
+		&--llama-cpp {
 			@apply -mx-0.5;
 		}
 
@@ -85,6 +90,10 @@
 
 		&--ollama {
 			@apply bg-neutral-50;
+		}
+
+		&--llama-cpp {
+			@apply bg-transparent;
 		}
 	}
 </style>

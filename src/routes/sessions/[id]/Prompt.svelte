@@ -60,6 +60,11 @@
 			ConnectionType.Ollama
 	);
 
+	const isLlamaCppFamily = $derived(
+		$serversStore.find((s) => s.id === session.model?.serverId)?.connectionType ===
+			ConnectionType.LlamaCpp
+	);
+
 	$effect(() => {
 		if (attachments.length) scrollToBottom(true);
 	});
@@ -81,7 +86,7 @@
 	}
 
 	function switchToControls() {
-		if (!isOllamaFamily) {
+		if (!isOllamaFamily && !isLlamaCppFamily) {
 			toast.warning($LL.controlsOnlyAvailableForOllama());
 			return;
 		}

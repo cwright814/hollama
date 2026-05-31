@@ -3,10 +3,10 @@
 Here's ways in which you can contribute:
 
 - Found a **bug** or have a **feature request**?
-  1. Search for it in the [existing issues](https://github.com/fmaclen/hollama/issues)
-  2. Open a [new issue](https://github.com/fmaclen/hollama/issues/new) if it doesn't yet exist
-- Comment or upvote [existing issues](https://github.com/fmaclen/hollama/issues) _(active issues will likely be prioritized)_
-- Submit a [pull request](https://github.com/fmaclen/hollama/pulls) _(please discuss in an issue first)_
+  1. Search for it in the [existing issues](https://github.com/cwright814/hollama-spark/issues)
+  2. Open a [new issue](https://github.com/cwright814/hollama-spark/issues/new) if it doesn't yet exist
+- Comment or upvote [existing issues](https://github.com/cwright814/hollama-spark/issues) _(active issues will likely be prioritized)_
+- Submit a [pull request](https://github.com/cwright814/hollama-spark/pulls) _(please discuss in an issue first)_
 
 ## Developing
 

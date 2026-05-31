@@ -10,7 +10,7 @@
 To host your own Hollama server, [install Docker](https://www.docker.com/products/docker-desktop/) and run the command below in your favorite terminal:
 
 ```shell
-docker run --rm -d -p 4173:4173 --name hollama ghcr.io/fmaclen/hollama:latest
+docker run --rm -d -p 4173:4173 --name hollama ghcr.io/cwright814/hollama-spark:latest
 ```
 
 Then visit [http://localhost:4173](http://localhost:4173)
@@ -26,13 +26,13 @@ docker stop hollama
 Then pull the latest version:
 
 ```shell
-docker pull ghcr.io/fmaclen/hollama:latest
+docker pull ghcr.io/cwright814/hollama-spark:latest
 ```
 
 Finally, start the container again:
 
 ```shell
-docker run --rm -d -p 4173:4173 --name hollama ghcr.io/fmaclen/hollama:latest
+docker run --rm -d -p 4173:4173 --name hollama ghcr.io/cwright814/hollama-spark:latest
 ```
 
 ## Connecting to an Ollama server hosted elsewhere
@@ -50,7 +50,7 @@ When hosting Hollama behind a reverse proxy or in a Kubernetes environment, you'
 ```shell
 docker run --rm -d -p 4173:4173 \
   -e VITE_ALLOWED_HOSTS='your-domain.com,another-domain.com' \
-  --name hollama ghcr.io/fmaclen/hollama:latest
+  --name hollama ghcr.io/cwright814/hollama-spark:latest
 ```
 
 Multiple domains can be specified by separating them with commas. If not specified, only 'localhost' will be allowed.

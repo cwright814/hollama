@@ -4,7 +4,7 @@ A minimal LLM chat app that runs _entirely_ in your browser. The "Spark" fork in
 
 ## Fork To-Dos
 
-- **Make local llama.cpp a first-class citizen.**
+- ~~**Make local llama.cpp a first-class citizen.**~~
 - Streamline support for llama-swap - seamless multi-model via a single llama-server instance.
 - Add some nice-to-haves (in-line thinking toggle, AI-generated chat titles, etc).
 - Write a companion script (bash/powershell/python) for managing llama-server and model downloads (from HuggingFace).
@@ -18,7 +18,7 @@ A minimal LLM chat app that runs _entirely_ in your browser. The "Spark" fork in
 
 ## Features
 
-- Support for **Ollama** & **OpenAI** servers
+- Support for **llama.cpp**, **Ollama** & **OpenAI** servers
 - Multi-server support
 - Text & vision models
 - Large prompt fields
@@ -26,7 +26,7 @@ A minimal LLM chat app that runs _entirely_ in your browser. The "Spark" fork in
 - Markdown rendering with syntax highlighting
 - KaTeX math notation
 - Code editor features
-- Customizable system prompts & advanced Ollama parameters
+- Customizable system prompts with advanced llama.cpp & Ollama parameters
 - Copy code snippets, messages or entire sessions
 - Edit & retry messages
 - Stores data locally on your browser
@@ -40,7 +40,7 @@ A minimal LLM chat app that runs _entirely_ in your browser. The "Spark" fork in
 
 - ⚡️ [Live demo](https://hollama.fernando.is)
   - _No sign-up required_
-- 🖥️ Download for [macOS, Windows & Linux](https://github.com/fmaclen/hollama/releases)
+- 🖥️ Download for [macOS, Windows & Linux](https://github.com/cwright814/hollama-spark/releases)
 - 🐳 [Self-hosting](SELF_HOSTING.md) with Docker
 - 🐞 [Contribute](CONTRIBUTING.md)
 

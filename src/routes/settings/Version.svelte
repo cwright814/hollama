@@ -63,7 +63,7 @@
 						{:else if $settingsStore.hollamaMetadata.isDocker}
 							<Button
 								variant="link"
-								href="https://github.com/fmaclen/hollama/blob/main/SELF_HOSTING.md#updating-to-the-latest-version"
+								href="https://github.com/cwright814/hollama-spark/blob/main/SELF_HOSTING.md#updating-to-the-latest-version"
 								target="_blank"
 							>
 								{$LL.howToUpdateDocker()}
