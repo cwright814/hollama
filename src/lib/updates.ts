@@ -33,13 +33,16 @@ export const updateStatusStore = writable<UpdateStatus>({
 // In development and test environments we append a '-dev' suffix to the version
 // to indicate that it's a development version. This function strips the suffix
 // so it can be compared using `semver`
+function cleanVersion(v: string): string {
+	return v.replace(/^v/, '').replace(HOLLAMA_DEV_VERSION_SUFFIX, '');
+}
+
 function isCurrentVersionLatest(currentVersion: string, latestVersion: string): boolean {
+	const cleanCurrent = cleanVersion(currentVersion);
+	const cleanLatest = cleanVersion(latestVersion);
 	return (
-		currentVersion === latestVersion ||
-		semver.gt(
-			currentVersion.replace(HOLLAMA_DEV_VERSION_SUFFIX, ''),
-			latestVersion.replace(HOLLAMA_DEV_VERSION_SUFFIX, '')
-		)
+		cleanCurrent === cleanLatest ||
+		semver.gt(cleanCurrent, cleanLatest)
 	);
 }
 
